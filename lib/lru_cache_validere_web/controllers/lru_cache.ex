@@ -1,11 +1,10 @@
 defmodule LruCache do
     use GenServer
   
-    defstruct [
-      :table_name, 
-      :max_size, 
-      :size, 
-      :status]
+    defstruct [:table_name, 
+    :max_size, 
+    :size, 
+    :status]
   
     def start_link({name, max_size}) do
       GenServer.start_link(__MODULE__, {name, max_size}, name: Cache)
