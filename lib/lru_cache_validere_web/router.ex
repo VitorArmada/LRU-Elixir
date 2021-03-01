@@ -1,22 +1,27 @@
 defmodule LruCacheValidereWeb.Router do
   use LruCacheValidereWeb, :router
 
-  pipeline :browser do
-    plug :accepts, ["html"]
-    plug :fetch_session
-    plug :fetch_flash
-    plug :protect_from_forgery
-    plug :put_secure_browser_headers
-  end
+ pipeline :browser do
+   plug :accepts, ["html"]
+   plug :fetch_session
+   plug :fetch_flash
+   plug :protect_from_forgery
+   plug :put_secure_browser_headers
+ end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
   scope "/", LruCacheValidereWeb do
-    pipe_through :browser
+    pipe_through :api
 
-    get "/", PageController, :index
+    #get "/", PageController, :index
+    get "/", LRUController, :index
+    get "/get", LRUController, :get
+    get "/get_status", LRUController, :get_status
+    put "/put", LRUController, :put
+    delete "/delete", LRUController, :delete
   end
 
   # Other scopes may use custom stacks.
@@ -31,12 +36,12 @@ defmodule LruCacheValidereWeb.Router do
   # If your application does not have an admins-only section yet,
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/" do
-      pipe_through :browser
-      live_dashboard "/dashboard", metrics: LruCacheValidereWeb.Telemetry
-    end
-  end
+  #if Mix.env() in [:dev, :test] do
+  #  import Phoenix.LiveDashboard.Router
+#
+  #  scope "/" do
+  #    pipe_through :browser
+  #    live_dashboard "/dashboard", metrics: LruCacheValidereWeb.Telemetry
+  #  end
+  #end
 end
