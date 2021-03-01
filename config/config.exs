@@ -18,6 +18,11 @@ config :lru_cache_validere, LruCacheValidereWeb.Endpoint,
   pubsub_server: LruCacheValidere.PubSub,
   live_view: [signing_salt: "4qFHxsTW"]
 
+# Configures LRU Cache
+config :cache,
+  lru_cache_name: :lru_cache,
+  max_size: 4
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
