@@ -19,7 +19,7 @@ config :lru_cache_validere, LruCacheValidereWeb.Endpoint,
   live_view: [signing_salt: "4qFHxsTW"]
 
 # Configures LRU Cache
-config :cache,
+config :lru_cache_validere,
   lru_cache_name: :lru_cache,
   max_size: 4
 

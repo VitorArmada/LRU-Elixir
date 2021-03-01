@@ -7,7 +7,7 @@ use Mix.Config
 # Run `mix help test` for more information.
 config :lru_cache_validere, LruCacheValidere.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "1",
   database: "lru_cache_validere_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

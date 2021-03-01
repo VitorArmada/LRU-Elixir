@@ -17,8 +17,8 @@ defmodule LruCacheValidere.Application do
       LruCacheValidereWeb.Endpoint,
       # Start a worker by calling: LruCacheValidere.Worker.start_link(arg)
       # {LruCacheValidere.Worker, arg}
-      {LruCache, {Application.fetch_env!(:cache, :lru_cache_name),
-                  Application.fetch_env!(:cache, :max_size)}}
+      {LruCache, {Application.fetch_env!(:lru_cache_validere, :lru_cache_name),
+                  Application.fetch_env!(:lru_cache_validere, :max_size)}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
