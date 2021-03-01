@@ -7,7 +7,7 @@ defmodule LruCacheValidereWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_lru_cache_validere_key",
-    signing_salt: "UUVp1BdM"
+    signing_salt: "+DAVIwZN"
   ]
 
   socket "/socket", LruCacheValidereWeb.UserSocket,

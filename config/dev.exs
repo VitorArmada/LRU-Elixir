@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :lru_cache_validere, LruCacheValidere.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "1",
   database: "lru_cache_validere_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

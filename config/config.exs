@@ -13,10 +13,10 @@ config :lru_cache_validere,
 # Configures the endpoint
 config :lru_cache_validere, LruCacheValidereWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "wnyddyhEzZbF31Ebh1tu8kftDl6mFrLLlPrB9XjVx3YJoKRUGY/7Q35RtAa/1HuF",
+  secret_key_base: "NC5mBL7NGRVISiayx4BL5Dt1lxFCsrxS96BpaumRPjadvsQjYogwO37jCxPDGegq",
   render_errors: [view: LruCacheValidereWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: LruCacheValidere.PubSub,
-  live_view: [signing_salt: "qwH7pUzV"]
+  live_view: [signing_salt: "4qFHxsTW"]
 
 # Configures Elixir's Logger
 config :logger, :console,
