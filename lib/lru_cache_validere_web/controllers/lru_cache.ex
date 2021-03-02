@@ -68,18 +68,18 @@ defmodule LruCache do
       end
     end
 
+    @impl true
+    def handle_cast(:delete, state) do
+      :ets.delete_all_objects(state.table_name)
+      {:noreply, %{state | :status => [], :size => 0}}
+    end
+    
     defp update_lru_status(key, [head | tail], prev \\ []) do
       if key == head do
         prev ++ tail ++ [head]
       else
         update_lru_status(key, tail, prev ++ [head])
       end
-    end
-  
-    @impl true
-    def handle_cast(:delete, state) do
-      :ets.delete_all_objects(state.table_name)
-      {:noreply, %{state | :status => [], :size => 0}}
     end
   end
   
