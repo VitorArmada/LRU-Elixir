@@ -38,8 +38,8 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
       conn = get(conn, "/get?key=2")
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
-      conn = get(conn, "/get_state")
-      assert json_response(conn, :ok) == %{"state" => ["3", "4", "5", "6"]}
+      conn = get(conn, "/get_status")
+      assert json_response(conn, :ok) == %{"status" => ["3", "4", "5", "6"]}
     end
   
     test "#should return up to date keys in the cache with 200 OK", %{conn: conn} do
@@ -49,15 +49,15 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       put(conn, "/put", [key: "3", value: "test3"])
       put(conn, "/put", [key: "4", value: "test4"])
       put(conn, "/put", [key: "5", value: "test5"])
-      conn = get(conn, "/get_state")
-      assert json_response(conn, :ok) == %{"state" => ["1", "2", "3", "4", "5"]}
+      conn = get(conn, "/get_status")
+      assert json_response(conn, :ok) == %{"status" => ["2", "3", "4", "5"]}
       put(conn, "/put", [key: "1", value: "test1"])
-      conn = get(conn, "/get_state")
-      assert json_response(conn, :ok) == %{"state" => ["2", "3", "4", "5", "1"]}
+      conn = get(conn, "/get_status")
+      assert json_response(conn, :ok) == %{"status" => ["3", "4", "5", "1"]}
       conn = get(conn, "/get?key=3")
       assert json_response(conn, :ok) == %{"value" => "test3"}
-      conn = get(conn, "/get_state")
-      assert json_response(conn, :ok) == %{"state" => ["2", "4", "5", "1", "3"]}
+      conn = get(conn, "/get_status")
+      assert json_response(conn, :ok) == %{"status" => ["4", "5", "1", "3"]}
     end
   
     test "#should delete the cache with 200 OK", %{conn: conn} do
@@ -72,8 +72,8 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
       conn = get(conn, "/get?key=3")
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
-      conn = get(conn, "/get_state")
-      assert json_response(conn, :ok) == %{"state" => []}
+      conn = get(conn, "/get_status")
+      assert json_response(conn, :ok) == %{"status" => []}
     end 
   end
   
