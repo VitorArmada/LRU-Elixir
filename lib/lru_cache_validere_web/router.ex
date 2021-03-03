@@ -20,6 +20,7 @@ defmodule LruCacheValidereWeb.Router do
     get "/get_status", LRUController, :get_status
     put "/put", LRUController, :put
     delete "/delete", LRUController, :delete
+    get "/size", LRUController, :size
   end
 
   # Other scopes may use custom stacks.

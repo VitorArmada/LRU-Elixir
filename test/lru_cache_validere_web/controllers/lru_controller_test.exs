@@ -16,7 +16,7 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
         conn = put(conn, "/put")
         assert json_response(conn, :bad_request) == %{"error" => "Invalid parameters provided."}
       end
-  
+
     test "#should return not found for a key that does not exist in the cache with 200 OK", %{conn: conn} do
       delete(conn, "/delete")
       put(conn, "/put", [key: "1", value: "value1"])
@@ -25,7 +25,7 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       conn = get(conn, "/get?key=2")
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
     end
-  
+
     test "#should remove least recently used key when new key is added at maximum capacity (of 4) with 200 OK", %{conn: conn} do
       delete(conn, "/delete")
       put(conn, "/put", [key: "1", value: "test1"])
@@ -41,7 +41,7 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       conn = get(conn, "/get_status")
       assert json_response(conn, :ok) == %{"status" => ["3", "4", "5", "6"]}
     end
-  
+
     test "#should return up to date keys in the cache with 200 OK", %{conn: conn} do
       delete(conn, "/delete")
       put(conn, "/put", [key: "1", value: "test1"])
@@ -59,7 +59,7 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       conn = get(conn, "/get_status")
       assert json_response(conn, :ok) == %{"status" => ["4", "5", "1", "3"]}
     end
-  
+
     test "#should delete the cache with 200 OK", %{conn: conn} do
       delete(conn, "/delete")
       put(conn, "/put", [key: "1", value: "test1"])
@@ -74,6 +74,5 @@ defmodule LruCacheValidereWeb.CacheControllerTest do
       assert json_response(conn, :not_found) == %{"value" => "not_found"}
       conn = get(conn, "/get_status")
       assert json_response(conn, :ok) == %{"status" => []}
-    end 
+    end
   end
-  

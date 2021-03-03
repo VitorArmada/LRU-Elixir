@@ -1,11 +1,11 @@
 defmodule LruCache do
     use GenServer
-  
-    defstruct [:table_name, 
-    :max_size, 
-    :size, 
+
+    defstruct [:table_name,
+    :max_size,
+    :size,
     :status]
-  
+
     def start_link({name, max_size}) do
       GenServer.start_link(__MODULE__, {name, max_size}, name: Cache)
     end
@@ -13,17 +13,21 @@ defmodule LruCache do
     def get(key) do
       GenServer.call(Cache, {:get, key})
     end
-  
+
     def get_status() do
       GenServer.call(Cache, :get_status)
     end
-  
+
     def put(key, value) do
       GenServer.cast(Cache, {:put, key, value})
     end
-  
+
     def delete() do
       GenServer.cast(Cache, :delete)
+    end
+
+    def size(value) do
+      GenServer.cast(Cache, {:size, value})
     end
 
     @impl true
@@ -31,7 +35,7 @@ defmodule LruCache do
       :ets.new(name, [:set, :public, :named_table])
       {:ok, %LruCache{table_name: name, max_size: max_size, size: 0, status: []}}
     end
-  
+
     @impl true
     def handle_call({:get, key}, _from, state) do
       case :ets.match(state.table_name, {key, :"$1"}) do
@@ -42,12 +46,18 @@ defmodule LruCache do
           {:reply, {:ok, value}, %{state | :status => new_status}}
       end
     end
-  
+
     @impl true
     def handle_call(:get_status, _from, state) do
       {:reply, {:ok, state.status}, state}
     end
-  
+
+    @impl true
+    def handle_call({:size, value}, _from, state) do
+      :ets.delete_all_objects(state.table_name)
+      {:noreply, %{state | :status => [], :size => 0, :max_size => value}}
+    end
+
     @impl true
     def handle_cast({:put, key, value}, state) do
       case :ets.match(state.table_name, {key, :"$1"}) do
@@ -73,7 +83,7 @@ defmodule LruCache do
       :ets.delete_all_objects(state.table_name)
       {:noreply, %{state | :status => [], :size => 0}}
     end
-    
+
     defp update_lru_status(key, [head | tail], prev \\ []) do
       if key == head do
         prev ++ tail ++ [head]
@@ -82,4 +92,3 @@ defmodule LruCache do
       end
     end
   end
-  
